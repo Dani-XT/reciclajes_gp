@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Footer } from './components/footer/footer';
-import { Header } from './components/header/header';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
+import { Footer } from './components/footer/footer';
+import { Header } from './components/header/header';
+import { ThemeToggle } from './components/theme-toggle/theme-toggle';
 
 @NgModule({
   imports: [
@@ -15,6 +17,7 @@ import { RouterModule } from '@angular/router';
 
     Footer,
     Header,
+    ThemeToggle,
   ],
 
   exports: [
@@ -25,6 +28,7 @@ import { RouterModule } from '@angular/router';
     
     Footer,
     Header,
+    ThemeToggle,
   ]
   
 })

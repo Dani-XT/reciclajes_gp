@@ -9,12 +9,12 @@ export const routes: Routes = [
     {
         path: 'home',
         loadComponent: () => import('./pages/home/home').then(m => m.Home),
-        title: 'home'
+        title: 'Home - Reciclajes GP'
     },
     {
         path: 'auth',
         loadChildren: () => import('./pages/auth/auth.routes').then(m => m.routes),
-        title: 'auth'
+        title: 'Login - Reciclajes GP'
     },
     {
         path: 'forgot-password',

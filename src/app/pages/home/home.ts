@@ -1,5 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+
+import { SharedModule } from '../../shared/shared';
 
 type Material = {
   name: string;
@@ -25,11 +26,14 @@ type Post = {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [SharedModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home {
+  logoDark = "assets/logos/logo-nombre-dark.png"
+  logoLight = "assets/logos/logo-nombre.png"
+
   phone = '+56 9 7976 3180';
   email = 'g.perez1980@hotmail.com';
   address = 'General Velásquez 1498, Local 1, Renca, Santiago';
