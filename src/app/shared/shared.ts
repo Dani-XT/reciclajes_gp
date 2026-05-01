@@ -17,7 +17,6 @@ import { ThemeToggle } from './components/theme-toggle/theme-toggle';
 
     Footer,
     Header,
-    ThemeToggle,
   ],
 
   exports: [
@@ -28,7 +27,6 @@ import { ThemeToggle } from './components/theme-toggle/theme-toggle';
     
     Footer,
     Header,
-    ThemeToggle,
   ]
   
 })

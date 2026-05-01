@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { ThemeToggle } from '../theme-toggle/theme-toggle';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [ThemeToggle],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

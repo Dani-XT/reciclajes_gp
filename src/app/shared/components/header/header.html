@@ -1,1 +1,49 @@
-<p>header works!</p>
+<!-- NAVBAR -->
+<header class="fixed left-0 top-0 z-50 w-full border-b border-black/10 bg-white/90 backdrop-blur-xl transition-colors duration-300 dark:border-white/10 dark:bg-zinc-950/90">
+<nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+
+    <a href="#" class="flex items-center gap-4">
+    <div class="flex h-14 w-14 items-center justify-center">
+        <img
+        src="assets/logos/logo.png"
+        alt="Logo Reciclajes GP"
+        class="h-12 w-12 object-contain dark:hidden"
+        />
+
+        <img
+        src="assets/logos/logo-dark.png"
+        alt="Logo Reciclajes GP"
+        class="hidden h-12 w-12 object-contain dark:block"
+        />
+    </div>
+
+    <div>
+        <p class="text-lg font-black leading-none text-[#2E7D32] dark:text-[#6fd66f]">
+        RECICLAJES G.P.
+        </p>
+        <p class="text-xs font-bold uppercase tracking-wide text-[#D71920] dark:text-[#ff6b6b]">
+        Compra venta de desechos industriales
+        </p>
+    </div>
+    </a>
+
+    <div class="hidden items-center gap-8 text-sm font-bold text-zinc-700 dark:text-zinc-300 lg:flex">
+    <a href="#" class="transition hover:text-[#2E7D32] dark:hover:text-[#6fd66f]">Materiales</a>
+    <a href="#" class="transition hover:text-[#2E7D32] dark:hover:text-[#6fd66f]">Servicios</a>
+    <a href="#" class="transition hover:text-[#2E7D32] dark:hover:text-[#6fd66f]">Publicaciones</a>
+    <a href="#" class="transition hover:text-[#2E7D32] dark:hover:text-[#6fd66f]">Contacto</a>
+    </div>
+
+    <div class="flex items-center gap-3">
+    <app-theme-toggle></app-theme-toggle>
+
+    <a
+        
+        target="_blank"
+        class="rounded-xl bg-[#D71920] px-5 py-2.5 text-sm font-black text-white transition hover:bg-red-700"
+    >
+        WhatsApp
+    </a>
+    </div>
+</nav>
+</header>
