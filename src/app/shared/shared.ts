@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 
 import { Footer } from './components/footer/footer';
 import { Header } from './components/header/header';
-import { ThemeToggle } from './components/theme-toggle/theme-toggle';
 
 @NgModule({
   imports: [

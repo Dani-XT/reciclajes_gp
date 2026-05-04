@@ -1,0 +1,110 @@
+.parallax-one-scene {
+  position: relative;
+  width: 100%;
+  height: calc(100svh - 96px);
+  min-height: 540px;
+  overflow: hidden;
+  background: #dff7ff;
+}
+
+:host-context(.dark) .parallax-one-scene {
+  background: #071326;
+}
+
+.parallax-one-sticky {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* TODAS las capas usan el mismo canvas completo */
+.parallax-one-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  display: block;
+}
+
+/* Orden real de capas */
+.layer-background {
+  z-index: 1;
+}
+
+.layer-mountain {
+  z-index: 2;
+}
+
+.layer-facility {
+  z-index: 3;
+}
+
+.layer-road {
+  z-index: 4;
+}
+
+.layer-truck {
+  z-index: 5;
+}
+
+.layer-foreground {
+  z-index: 6;
+}
+
+.parallax-one-bottom-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  height: 150px;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(244, 248, 239, 1) 0%,
+    rgba(244, 248, 239, 0.78) 28%,
+    rgba(244, 248, 239, 0) 100%
+  );
+}
+
+:host-context(.dark) .parallax-one-bottom-fade {
+  background: linear-gradient(
+    to top,
+    rgba(9, 9, 11, 1) 0%,
+    rgba(9, 9, 11, 0.72) 28%,
+    rgba(9, 9, 11, 0) 100%
+  );
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .parallax-one-scene {
+    height: calc(100svh - 88px);
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .parallax-one-scene {
+    height: calc(100svh - 80px);
+    min-height: 420px;
+  }
+
+  .parallax-one-bottom-fade {
+    height: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .parallax-one-scene {
+    height: calc(100svh - 72px);
+    min-height: 360px;
+  }
+}

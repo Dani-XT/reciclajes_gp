@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { SharedModule } from '../../shared/shared';
+
+import { ThemeService } from '../../services/theme';
+
+import { ParallaxOne } from './components/parallax-one/parallax-one';
+import { ParallaxTwo } from './components/parallax-two/parallax-two';
 
 type Material = {
   name: string;
@@ -26,13 +31,15 @@ type Post = {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, ParallaxOne, ParallaxTwo],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home {
-  logoDark = "assets/logos/logo-nombre-dark.png"
-  logoLight = "assets/logos/logo-nombre.png"
+  readonly themeService = inject(ThemeService);
+
+  logoDark = "assets/logos/logo-nombre-dark.png";
+  logoLight = "assets/logos/logo-nombre.png";
 
   phone = '+56 9 7976 3180';
   email = 'g.perez1980@hotmail.com';
