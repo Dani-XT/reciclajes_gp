@@ -2,10 +2,52 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-html {
-  scroll-behavior: smooth;
+:root {
+  color-scheme: light;
+
+  --gp-bg: #F6F8F3;
+  --gp-surface: #FFFFFF;
+  --gp-surface-2: #EAF0E7;
+
+  --gp-primary: #2F7D20;
+  --gp-primary-hover: #25651B;
+  --gp-accent: #75C900;
+
+  --gp-text: #182126;
+  --gp-text-muted: #66737A;
+
+  --gp-border: #D8E0DE;
+  --gp-metal: #C8D0D4;
+
+  --gp-shadow: 0 18px 45px rgba(24, 33, 38, 0.12);
 }
 
+.dark {
+  color-scheme: dark;
+
+  --gp-bg: #0B1110;
+  --gp-surface: #111A18;
+  --gp-surface-2: #182420;
+
+  --gp-primary: #57BC00;
+  --gp-primary-hover: #75D900;
+  --gp-accent: #A6F14A;
+
+  --gp-text: #F4F7F4;
+  --gp-text-muted: #A7B0AD;
+
+  --gp-border: #243330;
+  --gp-metal: #D4D8DB;
+
+  --gp-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+html,
 body {
-  margin: 0;
+  background: var(--gp-bg);
+  color: var(--gp-text);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--gp-primary) 28%, transparent);
 }

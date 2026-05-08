@@ -2,8 +2,8 @@ import {
   AfterViewInit,
   Directive,
   ElementRef,
-  HostListener,
   Input,
+  NgZone,
   OnDestroy,
   Renderer2,
   inject
@@ -16,22 +16,21 @@ import {
 export class ParallaxOneDirective implements AfterViewInit, OnDestroy {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
+  private readonly zone = inject(NgZone);
 
   @Input() parallaxOneSpeedX = 0;
   @Input() parallaxOneSpeedY = 0;
   @Input() parallaxOneScale = 0;
   @Input() parallaxOneBaseScale = 1;
-
   @Input() parallaxOneMaxX = 200;
   @Input() parallaxOneMaxY = 160;
-
   @Input() parallaxOneStart = 0;
   @Input() parallaxOneEnd = 1;
-
   @Input() parallaxOneOpacityStart: number | null = null;
   @Input() parallaxOneOpacityEnd: number | null = null;
 
   private rafId: number | null = null;
+  private removeListeners: Array<() => void> = [];
 
   ngAfterViewInit(): void {
     const element = this.elementRef.nativeElement;
@@ -40,29 +39,31 @@ export class ParallaxOneDirective implements AfterViewInit, OnDestroy {
     this.renderer.setStyle(element, 'transform-origin', 'center center');
     this.renderer.setStyle(element, 'pointer-events', 'none');
 
-    this.updateParallax();
+    this.zone.runOutsideAngular(() => {
+      const onFrameRequest = () => this.scheduleUpdate();
+
+      window.addEventListener('scroll', onFrameRequest, { passive: true });
+      window.addEventListener('resize', onFrameRequest, { passive: true });
+
+      this.removeListeners.push(() => {
+        window.removeEventListener('scroll', onFrameRequest);
+        window.removeEventListener('resize', onFrameRequest);
+      });
+
+      this.updateParallax();
+    });
   }
 
   ngOnDestroy(): void {
     if (this.rafId !== null) {
       cancelAnimationFrame(this.rafId);
     }
-  }
 
-  @HostListener('window:scroll')
-  onScroll(): void {
-    this.scheduleUpdate();
-  }
-
-  @HostListener('window:resize')
-  onResize(): void {
-    this.scheduleUpdate();
+    this.removeListeners.forEach(remove => remove());
   }
 
   private scheduleUpdate(): void {
-    if (this.rafId !== null) {
-      return;
-    }
+    if (this.rafId !== null) return;
 
     this.rafId = requestAnimationFrame(() => {
       this.rafId = null;
@@ -74,11 +75,15 @@ export class ParallaxOneDirective implements AfterViewInit, OnDestroy {
     const element = this.elementRef.nativeElement;
     const scene = element.closest('[data-parallax-one-scene]') as HTMLElement | null;
 
-    if (!scene) {
+    if (!scene) return;
+
+    const rect = scene.getBoundingClientRect();
+
+    // No calcular si la escena no está visible
+    if (rect.bottom < 0 || rect.top > window.innerHeight) {
       return;
     }
 
-    const rect = scene.getBoundingClientRect();
     const totalScroll = Math.max(1, rect.height - window.innerHeight);
     const currentScroll = -rect.top;
 
@@ -100,11 +105,7 @@ export class ParallaxOneDirective implements AfterViewInit, OnDestroy {
 
     const scale = this.parallaxOneBaseScale + easedProgress * this.parallaxOneScale;
 
-    this.renderer.setStyle(
-      element,
-      'transform',
-      `translate3d(${x}px, ${y}px, 0) scale(${scale})`
-    );
+    element.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
 
     if (
       this.parallaxOneOpacityStart !== null &&
@@ -114,7 +115,7 @@ export class ParallaxOneDirective implements AfterViewInit, OnDestroy {
         this.parallaxOneOpacityStart +
         easedProgress * (this.parallaxOneOpacityEnd - this.parallaxOneOpacityStart);
 
-      this.renderer.setStyle(element, 'opacity', String(this.clamp(opacity, 0, 1)));
+      element.style.opacity = String(this.clamp(opacity, 0, 1));
     }
   }
 
@@ -122,9 +123,7 @@ export class ParallaxOneDirective implements AfterViewInit, OnDestroy {
     const start = this.clamp(this.parallaxOneStart, 0, 1);
     const end = this.clamp(this.parallaxOneEnd, 0, 1);
 
-    if (end <= start) {
-      return progress;
-    }
+    if (end <= start) return progress;
 
     return this.clamp((progress - start) / (end - start), 0, 1);
   }
