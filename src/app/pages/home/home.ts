@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 
 import { SharedModule } from '../../shared/shared';
 
@@ -10,6 +10,8 @@ import { ParallaxTwo } from './components/parallax-two/parallax-two';
 type Material = {
   name: string;
   description: string;
+  image: string;
+  label: string;
 };
 
 type Service = {
@@ -38,6 +40,14 @@ type Post = {
 export class Home {
   readonly themeService = inject(ThemeService);
 
+  activeMaterialIndex = signal(0);
+
+  activeMaterial = computed(() => this.materials[this.activeMaterialIndex()]);
+
+  setActiveMaterial(index: number): void {
+    this.activeMaterialIndex.set(index);
+  }
+
   logoDark = "assets/logos/logo-nombre-dark.png";
   logoLight = "assets/logos/logo-nombre.png";
 
@@ -55,35 +65,51 @@ export class Home {
   materials: Material[] = [
     {
       name: 'Cobre',
-      description: 'Cables, cañerías, piezas eléctricas y residuos industriales.'
+      description: 'Cables, cañerías, piezas eléctricas y residuos industriales.',
+      image: 'assets/home/cobre.webp',
+      label: 'Alta demanda'
     },
     {
       name: 'Bronce',
-      description: 'Válvulas, fittings, piezas mecánicas y componentes metálicos.'
+      description: 'Válvulas, fittings, piezas mecánicas y componentes metálicos.',
+      image: 'assets/home/bronce.webp',
+      label: 'Material valorizable'
     },
     {
       name: 'Aluminio',
-      description: 'Perfiles, estructuras livianas, latas y despuntes.'
+      description: 'Perfiles, estructuras livianas, latas y despuntes.',
+      image: 'assets/home/aluminio.webp',
+      label: 'Liviano y reciclable'
     },
     {
       name: 'Fierro',
-      description: 'Estructuras, perfiles, chatarra pesada y residuos metálicos.'
+      description: 'Estructuras, perfiles, chatarra pesada y residuos metálicos.',
+      image: 'assets/home/fierro.webp',
+      label: 'Retiro por volumen'
     },
     {
       name: 'Acero inoxidable',
-      description: 'Piezas, planchas, estructuras y material industrial inoxidable.'
+      description: 'Piezas, planchas, estructuras y material industrial inoxidable.',
+      image: 'assets/home/acero-inoxidable.webp',
+      label: 'Industrial'
     },
     {
       name: 'Chatarra industrial',
-      description: 'Excedentes metálicos de empresas, talleres, bodegas e industrias.'
+      description: 'Excedentes metálicos de empresas, talleres, bodegas e industrias.',
+      image: 'assets/home/chatarra-industrial.webp',
+      label: 'Empresas y talleres'
     },
     {
       name: 'Motores',
-      description: 'Motores eléctricos, piezas metálicas y componentes recuperables.'
+      description: 'Motores eléctricos, piezas metálicas y componentes recuperables.',
+      image: 'assets/home/motores.webp',
+      label: 'Componentes recuperables'
     },
     {
       name: 'Cables',
-      description: 'Cables eléctricos, cableado industrial y restos de instalaciones.'
+      description: 'Cables eléctricos, cableado industrial y restos de instalaciones.',
+      image: 'assets/home/cables.webp',
+      label: 'Cableado eléctrico'
     }
   ];
 

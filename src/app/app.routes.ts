@@ -20,5 +20,10 @@ export const routes: Routes = [
         path: 'forgot-password',
         loadComponent: () => import('./pages/not-found/not-found').then(m => m.NotFound),
         title: 'forgot-password'
+    },
+    {
+        path: 'about-us',
+        loadComponent: () => import('./pages/about-us/about-us').then(m => m.AboutUs),
+        title: 'Sobre nosotros - Reciclajes GP'
     }
 ];

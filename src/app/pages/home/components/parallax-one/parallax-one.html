@@ -43,6 +43,19 @@
         aria-hidden="true"
       />
 
+      <!-- Atmósfera día: brillo, atardecer y sombra de nube -->
+      <div
+        class="sky-atmosphere day-atmosphere"
+        [class.is-hidden]="themeService.isDark()"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="sky-atmosphere night-stars"
+        [class.is-hidden]="!themeService.isDark()"
+        aria-hidden="true"
+      ></div>
+
       <!-- Camión -->
       <img
         appParallaxOne
@@ -76,12 +89,12 @@
       <!-- Sol CSS -->
       <div
         appParallaxOne
-        [parallaxOneSpeedX]="-28"
-        [parallaxOneSpeedY]="42"
+        [parallaxOneSpeedX]="-45"
+        [parallaxOneSpeedY]="135"
         [parallaxOneBaseScale]="1"
-        [parallaxOneScale]="0.06"
-        [parallaxOneMaxX]="50"
-        [parallaxOneMaxY]="70"
+        [parallaxOneScale]="-0.08"
+        [parallaxOneMaxX]="80"
+        [parallaxOneMaxY]="160"
         class="celestial sun"
         [class.is-hidden]="themeService.isDark()"
         aria-hidden="true"
@@ -109,12 +122,12 @@
       <!-- Luna CSS -->
       <div
         appParallaxOne
-        [parallaxOneSpeedX]="-28"
-        [parallaxOneSpeedY]="42"
+        [parallaxOneSpeedX]="-34"
+        [parallaxOneSpeedY]="36"
         [parallaxOneBaseScale]="1"
-        [parallaxOneScale]="0.06"
-        [parallaxOneMaxX]="50"
-        [parallaxOneMaxY]="70"
+        [parallaxOneScale]="0.04"
+        [parallaxOneMaxX]="55"
+        [parallaxOneMaxY]="60"
         class="celestial moon"
         [class.is-hidden]="!themeService.isDark()"
         aria-hidden="true"

@@ -79,7 +79,6 @@ export class ParallaxOneDirective implements AfterViewInit, OnDestroy {
 
     const rect = scene.getBoundingClientRect();
 
-    // No calcular si la escena no está visible
     if (rect.bottom < 0 || rect.top > window.innerHeight) {
       return;
     }
@@ -90,6 +89,30 @@ export class ParallaxOneDirective implements AfterViewInit, OnDestroy {
     const rawProgress = this.clamp(currentScroll / totalScroll, 0, 1);
     const normalizedProgress = this.normalizeProgress(rawProgress);
     const easedProgress = this.easeOutCubic(normalizedProgress);
+
+    /**
+     * Variables globales de la escena.
+     * Esto nos permite hacer atardecer, oscurecimiento del cielo,
+     * aparición de estrellas, etc. desde CSS.
+     */
+    scene.style.setProperty('--parallax-progress', rawProgress.toFixed(4));
+    scene.style.setProperty('--parallax-eased', easedProgress.toFixed(4));
+
+    /**
+     * Atardecer progresivo entre 22% y 68% del scroll.
+     */
+    const sunsetProgress = this.smoothStep(0.28, 0.78, rawProgress);
+    scene.style.setProperty('--sunset-progress', sunsetProgress.toFixed(4));
+
+    /**
+     * Oscurecimiento cuando el sol “entra” visualmente en zona de nubes.
+     * Esto simula la superposición sin tener que calcular colisiones reales.
+     */
+    const cloudShadowIn = this.smoothStep(0.30, 0.42, rawProgress);
+    const cloudShadowOut = 1 - this.smoothStep(0.56, 0.70, rawProgress);
+    const cloudShadow = this.clamp(cloudShadowIn * cloudShadowOut, 0, 1);
+
+    scene.style.setProperty('--cloud-shadow', cloudShadow.toFixed(4));
 
     const x = this.clamp(
       easedProgress * this.parallaxOneSpeedX,
@@ -117,6 +140,11 @@ export class ParallaxOneDirective implements AfterViewInit, OnDestroy {
 
       element.style.opacity = String(this.clamp(opacity, 0, 1));
     }
+  }
+
+  private smoothStep(edge0: number, edge1: number, value: number): number {
+    const x = this.clamp((value - edge0) / (edge1 - edge0), 0, 1);
+    return x * x * (3 - 2 * x);
   }
 
   private normalizeProgress(progress: number): number {

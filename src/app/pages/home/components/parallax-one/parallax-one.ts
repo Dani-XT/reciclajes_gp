@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { ThemeService } from '../../../../services/theme';
-
 import { ParallaxOneDirective } from '../../../../directives/parallax-one';
 
 @Component({
@@ -10,7 +9,8 @@ import { ParallaxOneDirective } from '../../../../directives/parallax-one';
   standalone: true,
   imports: [CommonModule, ParallaxOneDirective],
   templateUrl: './parallax-one.html',
-  styleUrl: './parallax-one.css'
+  styleUrl: './parallax-one.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ParallaxOne {
   readonly themeService = inject(ThemeService);

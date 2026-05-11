@@ -1,65 +1,90 @@
-<!-- NAVBAR -->
-<header
-  class="fixed left-0 top-0 z-50 w-full border-b border-[var(--gp-border)] bg-[var(--gp-nav-bg)] backdrop-blur-xl transition-colors duration-300"
->
-  <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+<header class="gp-header" [class.menu-open]="isMenuOpen()">
+  <nav class="gp-nav" aria-label="Navegación principal">
 
-    <a href="#" class="flex items-center gap-4">
-      <div class="flex h-14 w-14 items-center justify-center">
+    <!-- LOGO -->
+    <a href="#" class="gp-brand" aria-label="Ir al inicio" (click)="scrollToTop($event)">
+      <span class="gp-logo-box">
         <img
           src="assets/logos/logo.png"
           alt="Logo Reciclajes GP"
-          class="h-12 w-12 object-contain dark:hidden"
+          class="gp-logo dark:hidden"
         />
 
         <img
           src="assets/logos/logo-dark.png"
           alt="Logo Reciclajes GP"
-          class="hidden h-12 w-12 object-contain dark:block"
+          class="gp-logo hidden dark:block"
         />
-      </div>
+      </span>
 
-      <div>
-        <p class="text-lg font-black leading-none text-[var(--gp-text)]">
-          RECICLAJES <span class="text-[var(--gp-primary)]">G.P.</span>
-        </p>
+      <span class="gp-brand-text">
+        <span class="gp-brand-name">
+          RECICLAJES <strong>GP</strong>
+        </span>
 
-        <p class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--gp-muted)]">
-          Compra de metales
-        </p>
-      </div>
+        <span class="gp-brand-slogan">
+          Piensa en verde, recicla
+        </span>
+      </span>
     </a>
 
-    <div class="hidden items-center gap-8 text-sm font-bold text-[var(--gp-muted)] lg:flex">
-      <a href="#materiales" class="transition hover:text-[var(--gp-primary)]">
-        Materiales
-      </a>
-
-      <a href="#servicios" class="transition hover:text-[var(--gp-primary)]">
-        Servicios
-      </a>
-
-      <a href="#publicaciones" class="transition hover:text-[var(--gp-primary)]">
-        Publicaciones
-      </a>
-
-      <a href="#contacto" class="transition hover:text-[var(--gp-primary)]">
-        Contacto
-      </a>
+    <!-- NAV DESKTOP -->
+    <div class="gp-desktop-links">
+      <a href="#materiales" (click)="scrollToSection('materiales', $event)">Materiales</a>
+      <a href="#servicios" (click)="scrollToSection('servicios', $event)">Servicios</a>
+      <a href="#publicaciones" (click)="scrollToSection('publicaciones', $event)">Publicaciones</a>
+      <a href="#contacto" (click)="scrollToSection('contacto', $event)">Contacto</a>
     </div>
 
-    <div class="flex items-center gap-3">
+    <!-- ACCIONES -->
+    <div class="gp-actions">
       <app-theme-toggle></app-theme-toggle>
 
       <a
-        href=""
+        [href]="whatsappUrl"
         target="_blank"
-        rel="noopener"
-        class="rounded-xl bg-[var(--gp-primary)] px-5 py-2.5 text-sm font-black text-white shadow-[0_12px_28px_rgba(47,125,32,0.24)] transition hover:-translate-y-0.5 hover:bg-[var(--gp-primary-hover)] dark:text-[#0B1110]"
+        rel="noopener noreferrer"
+        class="gp-whatsapp gp-whatsapp-desktop"
       >
         WhatsApp
       </a>
-    </div>
 
+      <button
+        type="button"
+        class="gp-menu-button"
+        [attr.aria-expanded]="isMenuOpen()"
+        aria-controls="mobile-menu"
+        aria-label="Abrir o cerrar menú"
+        (click)="toggleMenu()"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </nav>
+
+  <!-- MENÚ MOBILE -->
+  <div
+    id="mobile-menu"
+    class="gp-mobile-menu"
+    [class.is-open]="isMenuOpen()"
+  >
+    <div class="gp-mobile-panel">
+      <a href="#materiales" (click)="scrollToSection('materiales', $event)">Materiales</a>
+      <a href="#servicios" (click)="scrollToSection('servicios', $event)">Servicios</a>
+      <a href="#publicaciones" (click)="scrollToSection('publicaciones', $event)">Publicaciones</a>
+      <a href="#contacto" (click)="scrollToSection('contacto', $event)">Contacto</a>
+
+      <a
+        [href]="whatsappUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="gp-whatsapp gp-whatsapp-mobile"
+        (click)="closeMenu()"
+      >
+        Contactar por WhatsApp
+      </a>
+    </div>
+  </div>
 </header>
