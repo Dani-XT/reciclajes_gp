@@ -1,6 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+html.theme-switching body *:not(app-theme-toggle):not(app-theme-toggle *) {
+  transition: none !important;
+}
 
 :root {
   color-scheme: light;

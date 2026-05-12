@@ -1,0 +1,1 @@
+export { ThemeTransitionService } from './theme-transition-service';

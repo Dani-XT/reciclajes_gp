@@ -1,8 +1,8 @@
-<header class="gp-header" [class.menu-open]="isMenuOpen()">
+<header class="gp-header">
   <nav class="gp-nav" aria-label="Navegación principal">
 
     <!-- LOGO -->
-    <a href="#" class="gp-brand" aria-label="Ir al inicio" (click)="scrollToTop($event)">
+    <a href="#" class="gp-brand" aria-label="Ir al inicio">
       <span class="gp-logo-box">
         <img
           src="assets/logos/logo.png"
@@ -30,18 +30,20 @@
 
     <!-- NAV DESKTOP -->
     <div class="gp-desktop-links">
-      <a href="#materiales" (click)="scrollToSection('materiales', $event)">Materiales</a>
-      <a href="#servicios" (click)="scrollToSection('servicios', $event)">Servicios</a>
-      <a href="#publicaciones" (click)="scrollToSection('publicaciones', $event)">Publicaciones</a>
-      <a href="#contacto" (click)="scrollToSection('contacto', $event)">Contacto</a>
+      <a href="#materiales">Materiales</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#publicaciones">Publicaciones</a>
+      <a href="#contacto">Contacto</a>
     </div>
 
     <!-- ACCIONES -->
     <div class="gp-actions">
+
       <app-theme-toggle></app-theme-toggle>
 
+
       <a
-        [href]="whatsappUrl"
+        href=""
         target="_blank"
         rel="noopener noreferrer"
         class="gp-whatsapp gp-whatsapp-desktop"
@@ -49,42 +51,7 @@
         WhatsApp
       </a>
 
-      <button
-        type="button"
-        class="gp-menu-button"
-        [attr.aria-expanded]="isMenuOpen()"
-        aria-controls="mobile-menu"
-        aria-label="Abrir o cerrar menú"
-        (click)="toggleMenu()"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+     
     </div>
   </nav>
-
-  <!-- MENÚ MOBILE -->
-  <div
-    id="mobile-menu"
-    class="gp-mobile-menu"
-    [class.is-open]="isMenuOpen()"
-  >
-    <div class="gp-mobile-panel">
-      <a href="#materiales" (click)="scrollToSection('materiales', $event)">Materiales</a>
-      <a href="#servicios" (click)="scrollToSection('servicios', $event)">Servicios</a>
-      <a href="#publicaciones" (click)="scrollToSection('publicaciones', $event)">Publicaciones</a>
-      <a href="#contacto" (click)="scrollToSection('contacto', $event)">Contacto</a>
-
-      <a
-        [href]="whatsappUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="gp-whatsapp gp-whatsapp-mobile"
-        (click)="closeMenu()"
-      >
-        Contactar por WhatsApp
-      </a>
-    </div>
-  </div>
 </header>

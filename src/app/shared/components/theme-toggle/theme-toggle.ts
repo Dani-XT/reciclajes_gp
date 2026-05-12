@@ -1,30 +1,56 @@
-import { Component, inject, signal } from '@angular/core';
-import { ThemeService } from '../../../services/theme';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  ViewChild,
+  computed,
+  inject,
+} from '@angular/core';
+import { ThemeService } from '@slateui/theme';
+import { ThemeTransitionService } from '../../../core/theme';
 
 @Component({
   selector: 'app-theme-toggle',
   standalone: true,
   imports: [],
   templateUrl: './theme-toggle.html',
-  styleUrl: './theme-toggle.css'
+  styleUrl: './theme-toggle.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemeToggle {
-  themeService = inject(ThemeService);
+  @ViewChild('toggleThemeButton', { static: true })
+  private readonly toggleButton!: ElementRef<HTMLButtonElement>;
 
-  readonly isChanging = signal(false);
+  private readonly themeService = inject(ThemeService);
+  private readonly themeTransition = inject(ThemeTransitionService);
 
-  private readonly animationDuration = 700;
+  readonly isDark = computed(() => this.themeService.isDark());
 
-  onToggleTheme(): void {
+  readonly isChanging = this.themeTransition.isRunning;
+
+  readonly ariaLabel = computed(() =>
+    this.isDark() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+  );
+
+  readonly switchText = computed(() =>
+    this.isDark() ? 'Modo oscuro activado' : 'Modo oscuro desactivado'
+  );
+
+  async onToggleTheme(): Promise<void> {
     if (this.isChanging()) {
       return;
     }
 
-    this.isChanging.set(true);
-    this.themeService.toggleTheme();
-
-    window.setTimeout(() => {
-      this.isChanging.set(false);
-    }, this.animationDuration);
+    try {
+      await this.themeTransition.run(
+        this.toggleButton.nativeElement,
+        () => {
+          const nextTheme = this.isDark() ? 'light' : 'dark';
+          this.themeService.setTheme(nextTheme);
+        }
+      );
+    } catch (error) {
+      console.warn('No se pudo cambiar el tema:', error);
+    }
   }
 }
